@@ -1,6 +1,6 @@
 {
   "name": "@wecom/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "The official CLI for WeCom",
   "keywords": [
     "wecom-cli",
@@ -42,10 +42,10 @@
     "typescript-eslint": "^8.57.2"
   },
   "optionalDependencies": {
-    "@wecom/cli-darwin-arm64": "0.1.1",
-    "@wecom/cli-darwin-x64": "0.1.1",
-    "@wecom/cli-linux-x64": "0.1.1",
-    "@wecom/cli-win32-x64": "0.1.1"
+    "@wecom/cli-darwin-arm64": "0.1.2",
+    "@wecom/cli-darwin-x64": "0.1.2",
+    "@wecom/cli-linux-x64": "0.1.2",
+    "@wecom/cli-win32-x64": "0.1.2"
   },
   "packageManager": "pnpm@10.32.1",
   "engines": {

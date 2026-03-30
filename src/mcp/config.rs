@@ -190,7 +190,7 @@ async fn fetch_mcp_config_from_server() -> Result<GetMcpConfigResponse, FetchMcp
     let response = reqwest::Client::builder()
         .build()
         .map_err(|e| FetchMcpConfigError::Other(e.into()))?
-        .post(&constants::mcp_config_endpoint())
+        .post(constants::mcp_config_endpoint())
         .json(&request)
         .send()
         .await

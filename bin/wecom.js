@@ -27,7 +27,7 @@ function getPlatformPackage() {
   if (!pkg) {
     console.error(
       `Error: unsupported platform ${platform}-${arch}.\n` +
-        `Supported platforms: ${Object.keys(platformMap).join(', ')}`
+        `Supported platforms: ${Object.keys(platformMap).join(', ')}`,
     );
     process.exit(1);
   }
@@ -48,10 +48,10 @@ function getBinaryPath() {
   } catch {
     console.error(
       `Error: cannot find @wecom/cli binary.\n` +
-      `Please try reinstalling: npm install @wecom/cli\n\n` +
+        `Please try reinstalling: npm install @wecom/cli\n\n` +
         `If the problem persists, check:\n` +
         `  1. Your npm config does not disable optional dependencies (--no-optional)\n` +
-        `  2. Your platform (${os.platform()}-${os.arch()}) is supported`
+        `  2. Your platform (${os.platform()}-${os.arch()}) is supported`,
     );
     process.exit(1);
   }

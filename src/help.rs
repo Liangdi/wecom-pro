@@ -37,21 +37,21 @@ pub async fn show_category_tools(category: &str) -> Result<()> {
     let wecom = env!("CARGO_BIN_NAME");
 
     println!("# {} {}", category, category_description);
-    println!("");
+    println!();
     println!("使用方式:");
     println!("    {} {} <method> [json_args]", wecom, category);
-    println!("");
+    println!();
     println!("选项:");
     println!("    -h, --help        显示详细的工具 schema 信息");
-    println!("");
+    println!();
     for tool in tools {
         let Some(name) = tool.get("name").and_then(|n| n.as_str()) else {
             continue;
         };
-        println!("");
+        println!();
         println!("## {}", name);
         if let Some(description) = tool.get("description").and_then(|d| d.as_str()) {
-            println!("");
+            println!();
             println!("{}", description);
         }
     }

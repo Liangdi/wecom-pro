@@ -78,10 +78,11 @@ pub fn save_key(key: &[u8; 32]) -> Result<()> {
 
     // Always write the file fallback.
     let key_path = encryption_key_path();
-    fs_util::atomic_write(&key_path, &b64.as_bytes(), Some(0o600))?;
+    fs_util::atomic_write(&key_path, b64.as_bytes(), Some(0o600))?;
 
-    if let Err(_) = keyring::Entry::new(KEYRING_SERVICE, KEYRING_USER)
+    if keyring::Entry::new(KEYRING_SERVICE, KEYRING_USER)
         .and_then(|entry| entry.set_password(&b64))
+        .is_err()
     {
         tracing::warn!("Keyring unavailable – encryption key stored in file only");
     }
@@ -97,7 +98,7 @@ pub fn save_key(key: &[u8; 32]) -> Result<()> {
 pub fn encrypt_data<T: serde::Serialize + ?Sized>(data: &T, key: &[u8; 32]) -> Result<Vec<u8>> {
     let json =
         serde_json::to_vec(data).map_err(|e| anyhow::anyhow!("JSON serialize error: {e:#}"))?;
-    Ok(cipher::encrypt(key, &json)?)
+    cipher::encrypt(key, &json)
 }
 
 /// Decrypt data: AES-256-GCM decrypt → deserialize.

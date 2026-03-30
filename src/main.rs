@@ -27,9 +27,7 @@ async fn main() -> Result<()> {
         .subcommand_required(true)
         .arg_required_else_help(true)
         .disable_help_subcommand(true)
-        .subcommand(
-            Command::new("init").about("初始化企业微信机器人配置"),
-        );
+        .subcommand(Command::new("init").about("初始化企业微信机器人配置"));
 
     for category in categories.iter() {
         cmd = cmd.subcommand(cmd::call::CallArgs::augment_args(

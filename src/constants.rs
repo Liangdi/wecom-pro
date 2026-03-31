@@ -44,3 +44,12 @@ pub fn mcp_config_endpoint() -> String {
     std::env::var(env::MCP_CONFIG_ENDPOINT)
         .unwrap_or_else(|_| DEFAULT_MCP_CONFIG_ENDPOINT.to_string())
 }
+
+pub fn get_user_agent() -> String {
+    format!(
+        "WeComCLI/{} {}/{}",
+        env!("CARGO_PKG_VERSION"),
+        std::env::consts::OS,
+        std::env::consts::ARCH,
+    )
+}

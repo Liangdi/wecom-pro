@@ -191,6 +191,7 @@ async fn fetch_mcp_config_from_server() -> Result<GetMcpConfigResponse, FetchMcp
         .build()
         .map_err(|e| FetchMcpConfigError::Other(e.into()))?
         .post(constants::mcp_config_endpoint())
+        .header("User-Agent", constants::get_user_agent())
         .json(&request)
         .send()
         .await

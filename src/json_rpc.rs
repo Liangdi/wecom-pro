@@ -2,7 +2,7 @@ use anyhow::Result;
 use serde::Serialize;
 use serde_json::Value;
 
-use crate::mcp;
+use crate::{constants, mcp};
 
 #[derive(Debug, Clone, Serialize)]
 struct JsonRpcRequest {
@@ -35,6 +35,7 @@ pub async fn send(
         .post(&mcp_url)
         .timeout(timeout)
         .header("Accept", "application/json")
+        .header("User-Agent", constants::get_user_agent())
         .json(&body);
 
     let response = request.send().await.map_err(|err| {

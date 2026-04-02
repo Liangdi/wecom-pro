@@ -3,16 +3,16 @@ name: wecomcli-manage-schedule
 description: 企业微信日程管理技能。适用于用户对企业微信日程的各类管理需求。当用户需要：(1) 查询指定时间范围内的日程列表或获取日程详细信息（标题、时间、地点、参与者等），(2) 创建新日程并设置提醒、参与人等，(3) 修改已有日程的标题、时间、地点等信息或取消日程，(4) 添加或移除日程参与人，(5) 查询多个成员的闲忙状态并分析共同空闲时段以安排会议时使用此技能。
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli schedule --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro schedule --help"
 ---
 
 # 企业微信日程管理技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 
-通过 `wecom-cli schedule <接口名> '<json入参>'` 与企业微信日程系统交互。
+通过 `wecom-pro schedule <接口名> '<json入参>'` 与企业微信日程系统交互。
 
 ## 注意事项
 
@@ -29,7 +29,7 @@ metadata:
 ### get_schedule_list_by_range — 查询日程 ID 列表
 
 ```bash
-wecom-cli schedule get_schedule_list_by_range '{"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS"}'
+wecom-pro schedule get_schedule_list_by_range '{"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS"}'
 ```
 
 返回 `schedule_id_list` 数组。仅支持当日前后 30 天。
@@ -37,7 +37,7 @@ wecom-cli schedule get_schedule_list_by_range '{"start_time": "YYYY-MM-DD HH:MM:
 ### get_schedule_detail — 获取日程详情
 
 ```bash
-wecom-cli schedule get_schedule_detail '{"schedule_id_list": ["SCHEDULE_ID_1", "SCHEDULE_ID_2"]}'
+wecom-pro schedule get_schedule_detail '{"schedule_id_list": ["SCHEDULE_ID_1", "SCHEDULE_ID_2"]}'
 ```
 
 支持 1~50 个 ID，返回日程标题、时间、地点、参与者等。参见 [API 详情](references/api-get-schedule-detail.md)。
@@ -45,7 +45,7 @@ wecom-cli schedule get_schedule_detail '{"schedule_id_list": ["SCHEDULE_ID_1", "
 ### create_schedule — 创建日程
 
 ```bash
-wecom-cli schedule create_schedule '{"schedule": {"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS", "summary": "日程标题", "attendees": [{"userid": "USER_ID"}], "reminders": {"is_remind": 1, "remind_before_event_secs": 3600, "timezone": 8}}}'
+wecom-pro schedule create_schedule '{"schedule": {"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS", "summary": "日程标题", "attendees": [{"userid": "USER_ID"}], "reminders": {"is_remind": 1, "remind_before_event_secs": 3600, "timezone": 8}}}'
 ```
 
 参见 [API 详情](references/api-create-schedule.md) | [reminders 字段](references/ref-reminders.md)。
@@ -55,7 +55,7 @@ wecom-cli schedule create_schedule '{"schedule": {"start_time": "YYYY-MM-DD HH:M
 只需传入需修改的字段，未传字段保持不变。
 
 ```bash
-wecom-cli schedule update_schedule '{"schedule": {"schedule_id": "SCHEDULE_ID", "summary": "更新后的标题"}}'
+wecom-pro schedule update_schedule '{"schedule": {"schedule_id": "SCHEDULE_ID", "summary": "更新后的标题"}}'
 ```
 
 参见 [API 详情](references/api-update-schedule.md)。
@@ -63,24 +63,24 @@ wecom-cli schedule update_schedule '{"schedule": {"schedule_id": "SCHEDULE_ID", 
 ### cancel_schedule — 取消日程
 
 ```bash
-wecom-cli schedule cancel_schedule '{"schedule_id": "SCHEDULE_ID"}'
+wecom-pro schedule cancel_schedule '{"schedule_id": "SCHEDULE_ID"}'
 ```
 
 ### add_schedule_attendees / del_schedule_attendees — 管理参与人
 
 - 添加参与人：
 ```bash
-wecom-cli schedule add_schedule_attendees '{"schedule_id": "SCHEDULE_ID", "attendees": [{"userid": "USER_ID"}]}'
+wecom-pro schedule add_schedule_attendees '{"schedule_id": "SCHEDULE_ID", "attendees": [{"userid": "USER_ID"}]}'
 ```
 - 移除参与人：
 ```bash
-wecom-cli schedule del_schedule_attendees '{"schedule_id": "SCHEDULE_ID", "attendees": [{"userid": "USER_ID"}]}'
+wecom-pro schedule del_schedule_attendees '{"schedule_id": "SCHEDULE_ID", "attendees": [{"userid": "USER_ID"}]}'
 ```
 
 ### check_availability — 查询闲忙
 
 ```bash
-wecom-cli schedule check_availability '{"check_user_list": ["USER_ID_1", "USER_ID_2"], "start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS"}'
+wecom-pro schedule check_availability '{"check_user_list": ["USER_ID_1", "USER_ID_2"], "start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS"}'
 ```
 
 支持 1~10 个用户，返回各用户的忙碌时段列表。参见 [API 详情](references/api-check-availability.md)。

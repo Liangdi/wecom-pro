@@ -11,7 +11,7 @@
 ## 请求示例
 
 ```bash
-wecom-cli msg get_msg_media '{"media_id": "MEDIAID_xxxxxx"}'
+wecom-pro msg get_msg_media '{"media_id": "MEDIAID_xxxxxx"}'
 ```
 
 ## 返回字段

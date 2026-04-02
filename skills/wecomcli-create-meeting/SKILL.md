@@ -3,12 +3,12 @@ name: wecomcli-create-meeting
 description: 企业微信会议创建技能, 支持创建预约会议. 当用户需要"创建会议", "预约会议", "约会议", "安排会议"时触发.
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli meeting --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro meeting --help"
 ---
 # 企业微信会议创建技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 ## 概述
 
@@ -20,20 +20,20 @@ wecomcli-create-meeting 提供企业微信预约会议的创建能力, 支持设
 
 ```bash
 # 单 Bot 模式
-wecom-cli meeting <tool_name> '<json_params>'
+wecom-pro meeting <tool_name> '<json_params>'
 
 # 多 Bot 模式 - 使用指定 Bot
-wecom-cli meeting --bot <bot_id> <tool_name> '<json_params>'
+wecom-pro meeting --bot <bot_id> <tool_name> '<json_params>'
 ```
 
 **多 Bot 示例**：
 
 ```bash
 # 使用 work bot 创建工作会议
-wecom-cli meeting --bot work create_meeting '{"title": "项目周会", "meeting_start_datetime": "2026-04-03 14:00", "meeting_duration": 3600, "invitees": {"userid": ["zhangsan", "lisi"]}}'
+wecom-pro meeting --bot work create_meeting '{"title": "项目周会", "meeting_start_datetime": "2026-04-03 14:00", "meeting_duration": 3600, "invitees": {"userid": ["zhangsan", "lisi"]}}'
 
 # 使用 personal bot 创建个人会议
-wecom-cli meeting --bot personal create_meeting '{"title": "朋友聚会", "meeting_start_datetime": "2026-04-05 19:00", "meeting_duration": 1800, "invitees": {"userid": ["wangwu"]}}'
+wecom-pro meeting --bot personal create_meeting '{"title": "朋友聚会", "meeting_start_datetime": "2026-04-05 19:00", "meeting_duration": 1800, "invitees": {"userid": ["wangwu"]}}'
 ```
 
 ---
@@ -47,7 +47,7 @@ wecom-cli meeting --bot personal create_meeting '{"title": "朋友聚会", "meet
 #### 执行命令
 
 ```bash
-wecom-cli meeting create_meeting '{"title": "<会议标题>", "meeting_start_datetime": "<会议开始时间>", "meeting_duration": <会议持续时长(秒)>}'
+wecom-pro meeting create_meeting '{"title": "<会议标题>", "meeting_start_datetime": "<会议开始时间>", "meeting_duration": <会议持续时长(秒)>}'
 ```
 
 #### 入参说明
@@ -113,7 +113,7 @@ wecom-cli meeting create_meeting '{"title": "<会议标题>", "meeting_start_dat
 2. **调用创建命令**:
 
 ```bash
-wecom-cli meeting create_meeting '{"title": "周例会", "meeting_start_datetime": "2026-03-18 15:00", "meeting_duration": 3600}'
+wecom-pro meeting create_meeting '{"title": "周例会", "meeting_start_datetime": "2026-03-18 15:00", "meeting_duration": 3600}'
 ```
 
 3. **展示结果**:
@@ -138,7 +138,7 @@ wecom-cli meeting create_meeting '{"title": "周例会", "meeting_start_datetime
 2. **通讯录查询**: 调用 `wecomcli-lookup-contact` 技能获取通讯录成员, 按姓名筛选出参与者的 userid.
 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
 
 在返回的 `userlist` 中筛选 `name` 包含 "张三" 和 "李四" 的成员, 获取其 `userid`.
@@ -146,7 +146,7 @@ wecom-cli contact get_userlist '{}'
 3. **信息已充分, 直接调用创建命令** (禁止暴露内部 ID):
 
 ```bash
-wecom-cli meeting create_meeting '{"title": "技术方案评审", "meeting_start_datetime": "2026-03-18 15:00", "meeting_duration": 3600, "location": "3楼会议室", "invitees": {"userid": ["zhangsan", "lisi"]}}'
+wecom-pro meeting create_meeting '{"title": "技术方案评审", "meeting_start_datetime": "2026-03-18 15:00", "meeting_duration": 3600, "location": "3楼会议室", "invitees": {"userid": ["zhangsan", "lisi"]}}'
 ```
 
 4. **展示结果**:

@@ -15,11 +15,12 @@
 
 ## 为什么选 wecom-pro？
 
-- **为 AI Agent 所设计** — 开箱即用的 [Skills](https://github.com/WecomTeam/wecom-cli/tree/main/skills)， 适配主流 AI 工具，Agent 可直接操作企业微信，无需额外适配
+- **为 AI Agent 所设计** — 开箱即用的 [Skills](https://github.com/WecomTeam/wecom-cli/tree/main/skills)，适配主流 AI 工具，支持非交互式初始化，Agent 可直接操作企业微信，无需额外适配
 - **覆盖用户核心需求** — 7 大业务品类、12 个 AI Agent [Skills](https://github.com/WecomTeam/wecom-cli/tree/main/skills)，覆盖通讯录、待办、会议、消息、日程、文档与智能表格
 - **多 Bot 支持** — 支持配置多个企业微信机器人，实现工作与个人账号分离，不同业务场景使用不同 Bot
 - **多种安装方式** — 支持 Rust cargo 和 Node.js npm 双重安装方式，适应不同开发环境
-- **快速上手** — `init` 配置凭证，直接调用品类工具，从安装到第一次 API 调用只需两步
+- **快速上手** — `init` 配置凭证，支持交互式和非交互式模式，直接调用品类工具，从安装到第一次 API 调用只需两步
+- **AI 友好** — 提供 JSON 输出格式，便于 AI Agent 解析和集成
 
 ## 功能
 
@@ -103,6 +104,9 @@ cargo install wecom-pro
 # 2. 配置企业微信机器人凭证（交互式，仅需一次）
 wecom-pro init
 
+# 或使用非交互式模式（适用于 AI Agent）
+wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
+
 # 3. 调用工具
 wecom-pro contact get_userlist '{}'
 ```
@@ -115,6 +119,9 @@ npm install -g @liangdi/wecom-pro
 
 # 2. 配置企业微信机器人凭证（交互式，仅需一次）
 wecom-pro init
+
+# 或使用非交互式模式（适用于 AI Agent）
+wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
 
 # 3. 调用工具
 wecom-pro contact get_userlist '{}'
@@ -184,7 +191,9 @@ Options:
 
 ### `init`
 
-交互式配置企业微信机器人凭证，加密存储到本地。
+配置企业微信机器人凭证，支持交互式和非交互式两种模式，凭证加密存储到本地。
+
+#### 交互式模式（默认）
 
 ```bash
 # 初始化默认 Bot（单 Bot 模式）
@@ -194,6 +203,42 @@ wecom-pro init
 wecom-pro init --bot work
 wecom-pro init --bot personal
 ```
+
+交互式模式提供友好的 TUI 引导，支持扫码和手动输入两种方式。
+
+#### 非交互式模式（适用于 AI Agent 和自动化脚本）
+
+非交互式模式通过参数直接提供所有必要信息，无需人工干预。
+
+**手动模式**：直接提供 Bot ID 和 Secret
+
+```bash
+# 使用手动模式初始化
+wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
+
+# 初始化指定 Bot
+wecom-pro init --bot work --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
+
+# JSON 输出格式
+wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET --output json
+```
+
+**扫码模式**：输出二维码 URL，等待扫码完成
+
+```bash
+# 使用扫码模式初始化
+wecom-pro init --method qrcode
+
+# JSON 输出格式
+wecom-pro init --method qrcode --output json
+```
+
+扫码模式会输出二维码链接，用户打开链接扫码后，工具会自动轮询并完成初始化。
+
+**输出格式**：
+
+- **文本格式**（默认）：友好的文本输出
+- **JSON 格式**（`--output json`）：结构化的 JSON 输出，便于 AI Agent 解析
 
 凭证存储位置：
 - 默认 Bot: `~/.config/wecom/bot.enc`

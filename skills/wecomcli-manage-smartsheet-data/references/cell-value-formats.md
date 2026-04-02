@@ -98,7 +98,7 @@
 
 具体步骤：先
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
  获取通讯录成员列表，在返回结果中按姓名/别名筛选出目标人员，取其 `userid` 值填入。
 

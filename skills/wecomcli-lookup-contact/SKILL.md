@@ -3,13 +3,13 @@ name: wecomcli-lookup-contact
 description: 通讯录成员查询技能，获取当前用户可见范围内的通讯录成员，支持按姓名/别名本地筛选匹配。返回 userid、姓名和别名。⚠️ 仅返回当前用户有权限查看的成员，非全量成员。
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli contact --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro contact --help"
 ---
 
 # 通讯录成员查询技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 获取当前用户可见范围内的通讯录成员，并在本地按姓名/别名进行筛选匹配。
 
@@ -22,7 +22,7 @@ metadata:
 **调用示例：**
 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
 
 **返回格式：**
@@ -101,7 +101,7 @@ wecom-cli contact get_userlist '{}'
 
 1. 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
  获取全量成员列表
 
@@ -134,7 +134,7 @@ wecom-cli contact get_userlist '{}'
 
 1. 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
  获取全量成员
 
@@ -149,7 +149,7 @@ wecom-cli contact get_userlist '{}'
 
 1. 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
  获取全量成员列表
 

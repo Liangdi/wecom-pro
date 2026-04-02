@@ -11,7 +11,7 @@
 ## 请求示例
 
 ```bash
-wecom-cli schedule get_schedule_detail '{"schedule_id_list": ["SCHEDULE_ID_1", "SCHEDULE_ID_2"]}'
+wecom-pro schedule get_schedule_detail '{"schedule_id_list": ["SCHEDULE_ID_1", "SCHEDULE_ID_2"]}'
 ```
 
 ## 返回字段

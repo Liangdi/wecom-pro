@@ -3,12 +3,12 @@ name: wecomcli-get-meeting
 description: 企业微信会议查询技能, 支持查询会议列表, 获取会议详情, 按关键词查找会议. 当用户需要"查看会议", "查询会议列表", "会议详情", "什么时候开会", "有哪些会议", "查找会议"时触发.
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli meeting --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro meeting --help"
 ---
 # 企业微信会议查询技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 
 ## 概述
@@ -22,7 +22,7 @@ wecomcli-get-meeting 提供企业微信会议查询能力, 包含以下功能:
 
 执行指定命令：
 ```bash
-wecom-cli meeting <tool_name> '<json_params>'
+wecom-pro meeting <tool_name> '<json_params>'
 ```
 ---
 
@@ -35,7 +35,7 @@ wecom-cli meeting <tool_name> '<json_params>'
 #### 执行命令
 
 ```bash
-wecom-cli meeting list_user_meetings '{"begin_datetime": "2026-03-01 00:00", "end_datetime": "2026-03-31 23:59", "limit": 100}'
+wecom-pro meeting list_user_meetings '{"begin_datetime": "2026-03-01 00:00", "end_datetime": "2026-03-31 23:59", "limit": 100}'
 ```
 
 #### 入参说明
@@ -74,7 +74,7 @@ wecom-cli meeting list_user_meetings '{"begin_datetime": "2026-03-01 00:00", "en
 #### 执行命令
 
 ```bash
-wecom-cli meeting get_meeting_info '{"meetingid": "<会议id>"}'
+wecom-pro meeting get_meeting_info '{"meetingid": "<会议id>"}'
 ```
 
 #### 入参说明
@@ -246,16 +246,16 @@ wecom-cli meeting get_meeting_info '{"meetingid": "<会议id>"}'
 2. **查询会议 ID 列表**:
 
 ```bash
-wecom-cli meeting list_user_meetings '{"begin_datetime": "2026-03-16 00:00", "end_datetime": "2026-03-22 23:59", "limit": 100}'
+wecom-pro meeting list_user_meetings '{"begin_datetime": "2026-03-16 00:00", "end_datetime": "2026-03-22 23:59", "limit": 100}'
 ```
 
 3. **逐个查询会议详情** (对返回的每个 meetingid):
 
 ```bash
-wecom-cli meeting get_meeting_info '{"meetingid": "<会议id1>"}'
+wecom-pro meeting get_meeting_info '{"meetingid": "<会议id1>"}'
 ```
 ```bash
-wecom-cli meeting get_meeting_info '{"meetingid": "<会议id2>"}'
+wecom-pro meeting get_meeting_info '{"meetingid": "<会议id2>"}'
 ```
 
 4. **汇总展示**:
@@ -290,7 +290,7 @@ wecom-cli meeting get_meeting_info '{"meetingid": "<会议id2>"}'
 2. **查询详情**:
 
 ```bash
-wecom-cli meeting get_meeting_info '{"meetingid": "<target_meetingid>"}'
+wecom-pro meeting get_meeting_info '{"meetingid": "<target_meetingid>"}'
 ```
 
 3. **展示结果**:
@@ -320,7 +320,7 @@ wecom-cli meeting get_meeting_info '{"meetingid": "<target_meetingid>"}'
 2. **拉取会议列表**:
 
 ```bash
-wecom-cli meeting list_user_meetings '{"begin_datetime": "2026-02-15 00:00", "end_datetime": "2026-04-16 23:59", "limit": 100}'
+wecom-pro meeting list_user_meetings '{"begin_datetime": "2026-02-15 00:00", "end_datetime": "2026-04-16 23:59", "limit": 100}'
 ```
 
 3. **逐个查询详情并匹配标题关键词**.

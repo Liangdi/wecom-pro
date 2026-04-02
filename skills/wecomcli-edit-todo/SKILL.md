@@ -3,15 +3,15 @@ name: wecomcli-edit-todo
 description: 企业微信待办事项编辑技能，支持创建、更新、删除待办及变更用户处理进度状态。在用户说"帮我创建一个待办"、"把这个任务分派给张三"、"标记待办完成"、"删掉那个待办"、"帮我建个提醒"、"更新一下待办内容"、"把提醒时间改到下周"、"接受这个待办"、"拒绝这个待办"等需要对待办进行写操作的场景时使用。
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli todo --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro todo --help"
 ---
 
 # 企业微信待办事项编辑技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
-通过 `wecom-cli` 对企业微信待办事项进行写操作，支持四种操作：创建待办、更新待办、删除待办、变更用户状态。
+通过 `wecom-pro` 对企业微信待办事项进行写操作，支持四种操作：创建待办、更新待办、删除待办、变更用户状态。
 
 ## 行为策略
 
@@ -27,21 +27,21 @@ metadata:
 
 #### 单 Bot 模式
 ```bash
-wecom-cli todo create_todo '<json格式的入参>'
+wecom-pro todo create_todo '<json格式的入参>'
 ```
 
 #### 多 Bot 模式
 ```bash
-wecom-cli todo --bot <bot_id> create_todo '<json格式的入参>'
+wecom-pro todo --bot <bot_id> create_todo '<json格式的入参>'
 ```
 
 **示例**：
 ```bash
 # 使用 work bot 创建工作待办
-wecom-cli todo --bot work create_todo '{"content": "完成项目报告", "todo_status": 1, "remind_time": "2026-04-03 09:00:00"}'
+wecom-pro todo --bot work create_todo '{"content": "完成项目报告", "todo_status": 1, "remind_time": "2026-04-03 09:00:00"}'
 
 # 使用 personal bot 创建个人待办
-wecom-cli todo --bot personal create_todo '{"content": "买牛奶", "todo_status": 1}'
+wecom-pro todo --bot personal create_todo '{"content": "买牛奶", "todo_status": 1}'
 ```
 
 **参数说明：**
@@ -58,7 +58,7 @@ wecom-cli todo --bot personal create_todo '{"content": "买牛奶", "todo_status
 **调用示例：**
 
 ```bash
-wecom-cli todo create_todo '{"content": "<待办的内容>", "remind_time": "2025-06-01 09:00:00"}'
+wecom-pro todo create_todo '{"content": "<待办的内容>", "remind_time": "2025-06-01 09:00:00"}'
 ```
 
 **返回格式：**
@@ -78,7 +78,7 @@ wecom-cli todo create_todo '{"content": "<待办的内容>", "remind_time": "202
 修改已有待办事项的内容、分派人、状态或提醒时间：
 
 ```bash
-wecom-cli todo update_todo '<json格式的入参>'
+wecom-pro todo update_todo '<json格式的入参>'
 ```
 
 **参数说明：**
@@ -96,7 +96,7 @@ wecom-cli todo update_todo '<json格式的入参>'
 **调用示例：**
 
 ```bash
-wecom-cli todo update_todo '{"todo_id": "TODO_ID", "content": "<待办的内容>", "remind_time": "2025-07-01 09:00:00"}'
+wecom-pro todo update_todo '{"todo_id": "TODO_ID", "content": "<待办的内容>", "remind_time": "2025-07-01 09:00:00"}'
 ```
 
 **返回格式：**
@@ -115,7 +115,7 @@ wecom-cli todo update_todo '{"todo_id": "TODO_ID", "content": "<待办的内容>
 删除指定的待办事项：
 
 ```bash
-wecom-cli todo delete_todo '<json格式的入参>'
+wecom-pro todo delete_todo '<json格式的入参>'
 ```
 
 **参数说明：**
@@ -129,7 +129,7 @@ wecom-cli todo delete_todo '<json格式的入参>'
 **调用示例：**
 
 ```bash
-wecom-cli todo delete_todo '{"todo_id": "TODO_ID"}'
+wecom-pro todo delete_todo '{"todo_id": "TODO_ID"}'
 ```
 
 **返回格式：**
@@ -151,7 +151,7 @@ wecom-cli todo delete_todo '{"todo_id": "TODO_ID"}'
 更改当前用户在某个待办中的状态（拒绝/接受/已完成）：
 
 ```bash
-wecom-cli todo change_todo_user_status '<json格式的入参>'
+wecom-pro todo change_todo_user_status '<json格式的入参>'
 ```
 
 **参数说明：**
@@ -166,7 +166,7 @@ wecom-cli todo change_todo_user_status '<json格式的入参>'
 **调用示例：**
 
 ```bash
-wecom-cli todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}'
+wecom-pro todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}'
 ```
 
 **返回格式：**
@@ -187,7 +187,7 @@ wecom-cli todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}
 用户问："帮我创建一个待办，让张三下周一前完成需求文档"
 
 1. 第一步：通过 wecomcli-lookup-contact 技能查询张三的 userid，在返回结果中筛选姓名为"张三"的成员，获取其 userid
-2. 第二步：创建待办并分派：`wecom-cli todo create_todo '{"content": "<待办的内容>", "follower_list": {"followers": [{"follower_id": "zhangsan", "follower_status": 1}]}, "remind_time": "2025-03-24 09:00:00"}'`
+2. 第二步：创建待办并分派：`wecom-pro todo create_todo '{"content": "<待办的内容>", "follower_list": {"followers": [{"follower_id": "zhangsan", "follower_status": 1}]}, "remind_time": "2025-03-24 09:00:00"}'`
 
 > `follower_id` 必须来自 `wecomcli-lookup-contact` 技能的 `get_userlist` 接口返回的 `userid`，禁止自行猜测。若搜索结果有多个同名人员，需展示候选列表让用户确认。
 
@@ -199,17 +199,17 @@ wecom-cli todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}
 
 用户问："把'完成Q2规划文档'这个待办标记为完成" / "关闭这个待办"
 
-1. 第一步：通过 wecomcli-get-todo-list 获取待办列表，找到目标待办的 todo_id：`wecom-cli todo get_todo_list '{}'`
-2. 第二步：通过 wecomcli-get-todo-detail 获取详情，确认是目标待办：`wecom-cli todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
-3. 第三步：确认后，将待办状态改为已完成：`wecom-cli todo update_todo '{"todo_id": "TODO_ID", "todo_status": 0}'`
+1. 第一步：通过 wecomcli-get-todo-list 获取待办列表，找到目标待办的 todo_id：`wecom-pro todo get_todo_list '{}'`
+2. 第二步：通过 wecomcli-get-todo-detail 获取详情，确认是目标待办：`wecom-pro todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
+3. 第三步：确认后，将待办状态改为已完成：`wecom-pro todo update_todo '{"todo_id": "TODO_ID", "todo_status": 0}'`
 
 #### 场景 B：标记我的参与状态为完成
 
 用户问："我已经完成了这个待办" / "标记我的部分为完成"
 
-1. 第一步：通过 wecomcli-get-todo-list 获取待办列表，找到目标待办的 todo_id：`wecom-cli todo get_todo_list '{}'`
-2. 第二步：通过 wecomcli-get-todo-detail 获取详情，确认是目标待办：`wecom-cli todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
-3. 第三步：确认后，变更当前用户的参与状态为已完成：`wecom-cli todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}'`
+1. 第一步：通过 wecomcli-get-todo-list 获取待办列表，找到目标待办的 todo_id：`wecom-pro todo get_todo_list '{}'`
+2. 第二步：通过 wecomcli-get-todo-detail 获取详情，确认是目标待办：`wecom-pro todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
+3. 第三步：确认后，变更当前用户的参与状态为已完成：`wecom-pro todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}'`
 
 > **如何判断用户意图：** 如果用户说"标记完成"且该待办是自己创建的、没有其他分派人，通常指场景 A（标记待办本身完成）。如果该待办有多个参与人，用户可能只是想标记自己那部分完成（场景 B）。不确定时应向用户确认。
 
@@ -219,15 +219,15 @@ wecom-cli todo change_todo_user_status '{"todo_id": "TODO_ID", "user_status": 2}
 
 用户问："把那个需求文档的待办提醒时间改到下周五"
 
-1. 第一步：查找目标待办：`wecom-cli todo get_todo_list '{}'`，再查详情：`wecom-cli todo get_todo_detail '{"todo_id_list": ["TODO_ID_1", "TODO_ID_2"]}'`
-2. 第二步：确认目标后更新：`wecom-cli todo update_todo '{"todo_id": "TODO_ID", "remind_time": "2025-03-28 09:00:00"}'`
+1. 第一步：查找目标待办：`wecom-pro todo get_todo_list '{}'`，再查详情：`wecom-pro todo get_todo_detail '{"todo_id_list": ["TODO_ID_1", "TODO_ID_2"]}'`
+2. 第二步：确认目标后更新：`wecom-pro todo update_todo '{"todo_id": "TODO_ID", "remind_time": "2025-03-28 09:00:00"}'`
 
 ### 删除待办
 
 用户问："删掉'代码评审'那个待办"
 
-1. 第一步：查找目标待办：`wecom-cli todo get_todo_list '{}'`，再查详情：`wecom-cli todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
-2. 第二步：向用户确认后删除：`wecom-cli todo delete_todo '{"todo_id": "TODO_ID"}'`
+1. 第一步：查找目标待办：`wecom-pro todo get_todo_list '{}'`，再查详情：`wecom-pro todo get_todo_detail '{"todo_id_list": ["TODO_ID"]}'`
+2. 第二步：向用户确认后删除：`wecom-pro todo delete_todo '{"todo_id": "TODO_ID"}'`
 
 > 删除前必须向用户确认，确认措辞示例："确认删除待办'代码评审'吗？删除后不可恢复。"
 

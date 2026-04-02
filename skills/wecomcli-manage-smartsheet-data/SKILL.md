@@ -3,22 +3,22 @@ name: wecomcli-manage-smartsheet-data
 description: 企业微信智能表格数据（记录）管理技能。提供智能表格记录的增删改查能力。适用场景：(1) 查询子表全部记录 (2) 添加一行或多行记录 (3) 更新已有记录 (4) 删除记录。当用户需要读取表格数据、写入新数据、修改或删除表格行时触发此 Skill。支持通过 docid 或文档 URL 定位文档。
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli doc --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro doc --help"
 ---
 
 # 企业微信智能表格数据管理
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 管理智能表格中的记录（行数据）。所有接口支持通过 `docid` 或 `url` 二选一定位文档。
 
 ## CLI 调用方式
 
-通过 `wecom-cli` 调用，品类为 `doc`：
+通过 `wecom-pro` 调用，品类为 `doc`：
 
 ```bash
-wecom-cli doc <tool_name> '<json_params>'
+wecom-pro doc <tool_name> '<json_params>'
 ```
 
 ## 返回格式说明
@@ -38,11 +38,11 @@ wecom-cli doc <tool_name> '<json_params>'
 
 - 通过 sheetid：
 ```bash
-wecom-cli doc smartsheet_get_records '{"docid": "DOCID", "sheet_id": "SHEETID"}'
+wecom-pro doc smartsheet_get_records '{"docid": "DOCID", "sheet_id": "SHEETID"}'
 ```
 - 或通过 URL：
 ```bash
-wecom-cli doc smartsheet_get_records '{"url": "https://doc.weixin.qq.com/smartsheet/xxx", "sheet_id": "SHEETID"}'
+wecom-pro doc smartsheet_get_records '{"url": "https://doc.weixin.qq.com/smartsheet/xxx", "sheet_id": "SHEETID"}'
 ```
 
 参见 [API 详情](references/api-get-records.md)。
@@ -54,7 +54,7 @@ wecom-cli doc smartsheet_get_records '{"url": "https://doc.weixin.qq.com/smartsh
 **调用前**必须先了解目标表的字段类型（通过 `smartsheet_get_fields`），重点关注 `field_type`。对于单选/多选（Option）字段，需注意匹配已有选项的 `id`。
 
 ```bash
-wecom-cli doc smartsheet_add_records '{"docid": "DOCID", "sheet_id": "SHEETID", "records": [{"values": {"任务名称": [{"type": "text", "text": "完成需求文档"}], "优先级": [{"text": "高"}]}}]}'
+wecom-pro doc smartsheet_add_records '{"docid": "DOCID", "sheet_id": "SHEETID", "records": [{"values": {"任务名称": [{"type": "text", "text": "完成需求文档"}], "优先级": [{"text": "高"}]}}]}'
 ```
 
 各字段类型的值格式参见 [单元格值格式参考](references/cell-value-formats.md)。
@@ -67,7 +67,7 @@ wecom-cli doc smartsheet_add_records '{"docid": "DOCID", "sheet_id": "SHEETID", 
 - `CELL_VALUE_KEY_TYPE_FIELD_ID`：key 为字段 ID
 
 ```bash
-wecom-cli doc smartsheet_update_records '{"docid": "DOCID", "sheet_id": "SHEETID", "key_type": "CELL_VALUE_KEY_TYPE_FIELD_TITLE", "records": [{"record_id": "RECORDID", "values": {"任务名称": [{"type": "text", "text": "更新后的内容"}]}}]}'
+wecom-pro doc smartsheet_update_records '{"docid": "DOCID", "sheet_id": "SHEETID", "key_type": "CELL_VALUE_KEY_TYPE_FIELD_TITLE", "records": [{"record_id": "RECORDID", "values": {"任务名称": [{"type": "text", "text": "更新后的内容"}]}}]}'
 ```
 
 **注意**：创建时间、最后编辑时间、创建人、最后编辑人字段不可更新。
@@ -77,14 +77,14 @@ wecom-cli doc smartsheet_update_records '{"docid": "DOCID", "sheet_id": "SHEETID
 删除一行或多行记录，单次必须在 500 行内。**操作不可逆**。record_id 通过 `smartsheet_get_records` 获取。
 
 ```bash
-wecom-cli doc smartsheet_delete_records '{"docid": "DOCID", "sheet_id": "SHEETID", "record_ids": ["RECORDID1", "RECORDID2"]}'
+wecom-pro doc smartsheet_delete_records '{"docid": "DOCID", "sheet_id": "SHEETID", "record_ids": ["RECORDID1", "RECORDID2"]}'
 ```
 
 ## 典型工作流
 
 1. **读取数据** → 
 ```bash
-wecom-cli doc smartsheet_get_records '{"docid":"DOCID","sheet_id":"SHEETID"}'
+wecom-pro doc smartsheet_get_records '{"docid":"DOCID","sheet_id":"SHEETID"}'
 ```
 2. **写入数据** → 先 `smartsheet_get_fields` 了解列类型 → 若涉及成员（USER）字段，先通过 `wecomcli-lookup-contact` 的 `get_userlist` 查找人员 userid → `smartsheet_add_records` 写入
 3. **更新数据** → 先 `smartsheet_get_records` 获取 record_id → 若涉及成员（USER）字段，先通过 `wecomcli-lookup-contact` 的 `get_userlist` 查找人员 userid → `smartsheet_update_records` 更新

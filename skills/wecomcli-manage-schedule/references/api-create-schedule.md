@@ -18,7 +18,7 @@
 ## 请求示例
 
 ```bash
-wecom-cli schedule create_schedule '{"schedule": {"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS", "summary": "日程标题", "attendees": [{"userid": "USER_ID"}], "reminders": {"is_remind": 1, "remind_before_event_secs": 3600, "timezone": 8}, "location": "会议地点"}}'
+wecom-pro schedule create_schedule '{"schedule": {"start_time": "YYYY-MM-DD HH:MM:SS", "end_time": "YYYY-MM-DD HH:MM:SS", "summary": "日程标题", "attendees": [{"userid": "USER_ID"}], "reminders": {"is_remind": 1, "remind_before_event_secs": 3600, "timezone": 8}, "location": "会议地点"}}'
 ```
 
 ## 返回字段

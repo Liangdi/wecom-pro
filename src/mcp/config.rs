@@ -22,6 +22,8 @@ pub enum McpBindSource {
     Interactive = 1,
     /// QR Code
     Qrcode = 2,
+    /// Manual (non-interactive)
+    Manual = 3,
 }
 
 #[derive(Debug, Clone, Serialize)]

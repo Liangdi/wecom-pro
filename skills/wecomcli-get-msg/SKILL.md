@@ -3,15 +3,15 @@ name: wecomcli-get-msg
 description: 企业微信消息技能。提供会话列表查询、消息记录拉取（支持文本/图片/文件/语音/视频）、多媒体文件获取和文本消息发送能力。当用户需要"查看消息"、"看聊天记录"、"发消息给某人"、"最近有什么消息"、"给群里发消息"、"看看发了什么图片/文件"时触发。
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli msg --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro msg --help"
 ---
 
 # 企业微信消息技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
-通过 `wecom-cli msg <接口名> '<json入参>'` 与企业微信消息系统交互。
+通过 `wecom-pro msg <接口名> '<json入参>'` 与企业微信消息系统交互。
 
 ### 多 Bot 支持
 
@@ -19,13 +19,13 @@ metadata:
 
 ```bash
 # 使用 work bot 发送工作消息
-wecom-cli msg --bot work send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "工作通知"}}'
+wecom-pro msg --bot work send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "工作通知"}}'
 
 # 使用 personal bot 发送个人消息
-wecom-cli msg --bot personal send_message '{"chat_type": 1, "chatid": "lisi", "msgtype": "text", "text": {"content": "周末安排"}}'
+wecom-pro msg --bot personal send_message '{"chat_type": 1, "chatid": "lisi", "msgtype": "text", "text": {"content": "周末安排"}}'
 
 # 使用指定 bot 查询会话列表
-wecom-cli msg --bot work get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time": "2026-03-17 23:59:59"}'
+wecom-pro msg --bot work get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time": "2026-03-17 23:59:59"}'
 ```
 
 ---
@@ -35,7 +35,7 @@ wecom-cli msg --bot work get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00"
 ### get_msg_chat_list — 获取会话列表
 
 ```bash
-wecom-cli msg get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time": "2026-03-17 23:59:59"}'
+wecom-pro msg get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time": "2026-03-17 23:59:59"}'
 ```
 
 按时间范围查询有消息的会话列表，支持分页。参见 [API 详情](references/api-get-msg-chat-list.md)。
@@ -43,7 +43,7 @@ wecom-cli msg get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time
 ### get_message — 拉取会话消息
 
 ```bash
-wecom-cli msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
+wecom-pro msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
 ```
 
 根据会话类型和 ID 拉取指定时间范围内的消息记录，支持分页。支持 text/image/file/voice/video 消息类型，仅支持 7 天内。参见 [API 详情](references/api-get-message.md)。
@@ -51,7 +51,7 @@ wecom-cli msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": 
 ### get_msg_media — 获取消息文件内容
 
 ```bash
-wecom-cli msg get_msg_media '{"media_id": "MEDIAID_xxxxxx"}'
+wecom-pro msg get_msg_media '{"media_id": "MEDIAID_xxxxxx"}'
 ```
 
 根据文件 ID 自动下载文件到本地，返回文件的本地路径（`local_path`）、名称、类型、大小及 MIME 类型。用于获取图片、文件、语音、视频等非文本消息的实际内容。参见 [API 详情](references/api-get-msg-media.md)。
@@ -59,7 +59,7 @@ wecom-cli msg get_msg_media '{"media_id": "MEDIAID_xxxxxx"}'
 ### send_message — 发送文本消息
 
 ```bash
-wecom-cli msg send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "hello world"}}'
+wecom-pro msg send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "hello world"}}'
 ```
 
 向单聊或群聊发送文本消息。参见 [API 详情](references/api-send-message.md)。

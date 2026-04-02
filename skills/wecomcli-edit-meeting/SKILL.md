@@ -3,12 +3,12 @@ name: wecomcli-edit-meeting
 description: 企业微信会议管理技能, 支持取消会议和更新会议受邀成员. 当用户需要"取消会议", "删除会议", "修改会议成员", "添加会议参与人", "移除会议成员"时触发.
 metadata:
   requires:
-    bins: ["wecom-cli"]
-  cliHelp: "wecom-cli meeting --help"
+    bins: ["wecom-pro"]
+  cliHelp: "wecom-pro meeting --help"
 ---
 # 企业微信会议管理技能
 
-> `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
+> `wecom-pro` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-pro` 命令完成。
 
 
 ## 概述
@@ -22,7 +22,7 @@ wecomcli-edit-meeting 提供企业微信会议管理能力, 包含以下功能:
 
 调用指定命令：
 ```bash
-wecom-cli meeting <tool_name> '<json_params>'
+wecom-pro meeting <tool_name> '<json_params>'
 ```
 
 ---
@@ -36,7 +36,7 @@ wecom-cli meeting <tool_name> '<json_params>'
 #### 调用命令
 
 ```bash
-wecom-cli meeting cancel_meeting '{"meetingid": "<会议id>"}'
+wecom-pro meeting cancel_meeting '{"meetingid": "<会议id>"}'
 ```
 
 #### 入参说明
@@ -63,7 +63,7 @@ wecom-cli meeting cancel_meeting '{"meetingid": "<会议id>"}'
 #### 调用命令
 
 ```bash
-wecom-cli meeting set_invite_meeting_members '{"meetingid": "<会议id>", "invitees": [{"userid": "lisi"}, {"userid": "wangwu"}]}'
+wecom-pro meeting set_invite_meeting_members '{"meetingid": "<会议id>", "invitees": [{"userid": "lisi"}, {"userid": "wangwu"}]}'
 ```
 
 #### 入参说明
@@ -99,7 +99,7 @@ wecom-cli meeting set_invite_meeting_members '{"meetingid": "<会议id>", "invit
 2. **直接执行取消**:
 
 ```bash
-wecom-cli meeting cancel_meeting '{"meetingid": "<target_meetingid>"}'
+wecom-pro meeting cancel_meeting '{"meetingid": "<target_meetingid>"}'
 ```
 
 3. **展示结果**:
@@ -121,7 +121,7 @@ wecom-cli meeting cancel_meeting '{"meetingid": "<target_meetingid>"}'
 3. **通讯录查询**: 调用 `wecomcli-lookup-contact` 技能获取通讯录成员, 按姓名筛选出王五的 userid.
 
 ```bash
-wecom-cli contact get_userlist '{}'
+wecom-pro contact get_userlist '{}'
 ```
 
 在返回的 `userlist` 中筛选 `name` 包含 "王五" 的成员, 获取其 `userid`.
@@ -130,7 +130,7 @@ wecom-cli contact get_userlist '{}'
 5. **执行更新**:
 
 ```bash
-wecom-cli meeting set_invite_meeting_members '{"meetingid": "<target_meetingid>", "invitees": [{"userid": "zhangsan"}, {"userid": "lisi"}, {"userid": "wangwu"}]}'
+wecom-pro meeting set_invite_meeting_members '{"meetingid": "<target_meetingid>", "invitees": [{"userid": "zhangsan"}, {"userid": "lisi"}, {"userid": "wangwu"}]}'
 ```
 
 6. **展示结果**:

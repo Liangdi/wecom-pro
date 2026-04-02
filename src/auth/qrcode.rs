@@ -55,7 +55,7 @@ struct BotInfoPayload {
 // Platform code
 // ---------------------------------------------------------------------------
 
-fn get_plat_code() -> u8 {
+pub fn get_plat_code() -> u8 {
     if cfg!(target_os = "macos") {
         1
     } else if cfg!(target_os = "windows") {
@@ -76,7 +76,7 @@ fn build_client() -> Result<reqwest::Client> {
 }
 
 /// 获取二维码链接和轮询 scode
-async fn fetch_qrcode(client: &reqwest::Client) -> Result<(String, String)> {
+pub async fn fetch_qrcode(client: &reqwest::Client) -> Result<(String, String)> {
     let url = format!(
         "{}?source={}&plat={}",
         QR_GENERATE_URL,
@@ -105,7 +105,7 @@ fn render_qrcode(url: &str) -> Result<()> {
 }
 
 /// 轮询扫码结果
-async fn poll_result(client: &reqwest::Client, scode: &str) -> Result<(String, String)> {
+pub async fn poll_result(client: &reqwest::Client, scode: &str) -> Result<(String, String)> {
     let url = format!("{}?scode={}", QR_QUERY_URL, scode);
     let start = std::time::Instant::now();
 

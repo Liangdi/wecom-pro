@@ -17,13 +17,13 @@
 单聊：
 
 ```bash
-wecom-cli msg send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "hello world"}}'
+wecom-pro msg send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "hello world"}}'
 ```
 
 群聊：
 
 ```bash
-wecom-cli msg send_message '{"chat_type": 2, "chatid": "wrxxxxxxxx", "msgtype": "text", "text": {"content": "大家好"}}'
+wecom-pro msg send_message '{"chat_type": 2, "chatid": "wrxxxxxxxx", "msgtype": "text", "text": {"content": "大家好"}}'
 ```
 
 ## 返回字段

@@ -17,19 +17,19 @@
 单聊：
 
 ```bash
-wecom-cli msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
+wecom-pro msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
 ```
 
 群聊：
 
 ```bash
-wecom-cli msg get_message '{"chat_type": 2, "chatid": "wrxxxxxxxx", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
+wecom-pro msg get_message '{"chat_type": 2, "chatid": "wrxxxxxxxx", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00"}'
 ```
 
 分页请求：
 
 ```bash
-wecom-cli msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00", "cursor": "CURSOR_xxxxxx"}'
+wecom-pro msg get_message '{"chat_type": 1, "chatid": "zhangsan", "begin_time": "2026-03-17 09:00:00", "end_time": "2026-03-17 18:00:00", "cursor": "CURSOR_xxxxxx"}'
 ```
 
 ## 返回字段

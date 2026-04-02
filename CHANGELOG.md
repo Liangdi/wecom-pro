@@ -1,8 +1,32 @@
+## [0.1.4] - 2026-04-02
+
+### 🚀 Features
+
+- 添加 npm 和 cargo 发布快捷命令
+- 添加 npm 包构建和发布完整流程到 justfile
+
+### 🐛 Bug Fixes
+
+- 添加 --access public 解决 npm 发布 402 错误
+- 将 Windows 目标从 MSVC 改为 GNU 工具链
+- 修复 Windows GNU 工具链编译错误
+
+### 🚜 Refactor
+
+- 将 Apple 平台构建和发布独立出来
+
+### ⚙️ Miscellaneous Tasks
+
+- Release version 0.1.4
 ## [0.1.3] - 2026-04-02
 
 ### 🚀 Features
 
 - 添加 npm 包支持和重命名为 @liangdi/wecom-pro
+
+### ⚙️ Miscellaneous Tasks
+
+- Release version 0.1.3
 ## [0.1.2] - 2026-04-02
 
 ### 🚀 Features

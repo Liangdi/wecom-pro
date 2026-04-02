@@ -1,7 +1,7 @@
 {
-  "name": "@wecom/cli-darwin-arm64",
+  "name": "@liangdi/wecom-pro-darwin-arm64",
   "version": "0.1.3",
-  "description": "The darwin-arm64 binary for @wecom/cli",
+  "description": "The darwin-arm64 binary for @liangdi/wecom-pro",
   "license": "MIT",
   "files": [
     "bin",

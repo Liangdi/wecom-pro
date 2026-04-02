@@ -1,0 +1,28 @@
+# 源代码
+src/
+target/
+Cargo.toml
+Cargo.lock
+build.rs
+.git/
+.gitignore
+.githooks/
+
+# 开发文件
+.eslintrc.js
+.prettierrc.js
+eslint.config.js
+prettier.config.js
+commitlint.config.js
+.changeset/
+node_modules/
+
+# 文档
+BUILD_NPM.md
+*.md
+!README.md
+
+# 其他
+.env
+.DS_Store
+*.log

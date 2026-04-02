@@ -2,12 +2,14 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/rust-%3E%3D1.75-orange.svg)](https://www.rust-lang.org/)
+[![npm](https://img.shields.io/badge/npm-%40liangdi%2Fwecom--pro-blue.svg)](https://www.npmjs.com/package/@liangdi/wecom-pro)
 
 企业微信命令行工具 — 让人类和 AI Agent 都能在终端中操作企业微信。覆盖通讯录、待办、会议、消息、日程、文档、智能表格等核心业务域，提供 7 大品类及 12 个 AI Agent [Skills](https://github.com/WecomTeam/wecom-pro/tree/main/skills)。
 
-> **项目说明**: 本项目是从 [WecomTeam/wecom-pro](https://github.com/WecomTeam/wecom-pro) fork 而来，增加了**多 Bot 支持**功能。
+> **项目说明**: 本项目是从 [WecomTeam/wecom-cli](https://github.com/WecomTeam/wecom-cli) fork 而来，增加了**多 Bot 支持**功能。
 > - **作者**: Liangdi <wu@liangdi.me>
 > - **项目地址**: [https://github.com/Liangdi/wecom-pro](https://github.com/Liangdi/wecom-pro)
+> - **NPM 包**: [@liangdi/wecom-pro](https://www.npmjs.com/package/@liangdi/wecom-pro)
 
 [安装](#安装与快速开始) · [AI Agent Skills](#agent-skills) · [命令](#命令参考) · [品类一览](#品类与能力一览)
 
@@ -16,6 +18,7 @@
 - **为 AI Agent 所设计** — 开箱即用的 [Skills](https://github.com/WecomTeam/wecom-cli/tree/main/skills)， 适配主流 AI 工具，Agent 可直接操作企业微信，无需额外适配
 - **覆盖用户核心需求** — 7 大业务品类、12 个 AI Agent [Skills](https://github.com/WecomTeam/wecom-cli/tree/main/skills)，覆盖通讯录、待办、会议、消息、日程、文档与智能表格
 - **多 Bot 支持** — 支持配置多个企业微信机器人，实现工作与个人账号分离，不同业务场景使用不同 Bot
+- **多种安装方式** — 支持 Rust cargo 和 Node.js npm 双重安装方式，适应不同开发环境
 - **快速上手** — `init` 配置凭证，直接调用品类工具，从安装到第一次 API 调用只需两步
 
 ## 功能
@@ -34,16 +37,39 @@
 
 ### 环境要求
 
-- ~~Node.js（`npm`/`npx`）~~
+- **Rust** (cargo) 或 **Node.js** (npm/npx)
 - 企业微信机器人的 Bot ID 和 Secret
 
 ### 安装
 
-> **注意**: 本项目为 Rust 实现，暂不提供 Node.js 版本。
+#### 方式一：使用 cargo 安装（推荐）
 
 ```bash
 # 使用 cargo 安装（推荐）
 cargo install wecom-pro
+
+# 静态链接版本（适用于 musl Linux 系统）
+cargo install wecom-pro --target x86_64-unknown-linux-musl
+```
+
+#### 方式二：使用 npm 安装
+
+```bash
+# 使用 npm 全局安装
+npm install -g @liangdi/wecom-pro
+
+# 使用 npx 直接运行（无需安装）
+npx @liangdi/wecom-pro --help
+```
+
+#### 方式三：使用 pnpm/yarn 安装
+
+```bash
+# 使用 pnpm
+pnpm add -g @liangdi/wecom-pro
+
+# 使用 yarn
+yarn global add @liangdi/wecom-pro
 ```
 
 ~~从 GitHub Releases 下载预编译二进制文件（暂未发布）~~
@@ -68,13 +94,29 @@ cargo install wecom-pro
 
 ### 快速开始
 
-#### 单 Bot 模式（默认）
+#### 使用 cargo 安装
 
 ```bash
-# 1. 配置企业微信机器人凭证（交互式，仅需一次）
+# 1. 安装 wecom-pro
+cargo install wecom-pro
+
+# 2. 配置企业微信机器人凭证（交互式，仅需一次）
 wecom-pro init
 
-# 2. 调用工具
+# 3. 调用工具
+wecom-pro contact get_userlist '{}'
+```
+
+#### 使用 npm/npx 安装
+
+```bash
+# 1. 安装（或使用 npx 无需安装）
+npm install -g @liangdi/wecom-pro
+
+# 2. 配置企业微信机器人凭证（交互式，仅需一次）
+wecom-pro init
+
+# 3. 调用工具
 wecom-pro contact get_userlist '{}'
 ```
 
@@ -544,13 +586,51 @@ wecom-pro doc --bot project-a edit_doc_content '{"docid": "DOC_ID", "content": "
 ### 技术栈
 
 - **语言**: Rust
-- **版本**: v0.1.3+
+- **NPM 包**: [@liangdi/wecom-pro](https://www.npmjs.com/package/@liangdi/wecom-pro)
 - **作者**: Liangdi <wu@liangdi.me>
 - **仓库**: [https://github.com/Liangdi/wecom-pro](https://github.com/Liangdi/wecom-pro)
 
 ### 贡献
 
 欢迎提交 Issue 和 Pull Request！
+
+### 构建 npm 包
+
+如果您想自己构建 npm 包或贡献代码，请参阅 [BUILD_NPM.md](BUILD_NPM.md) 了解详细的构建步骤。
+
+### 发布到 npm
+
+如果您是维护者，请参阅 [PUBLISH_NPM.md](PUBLISH_NPM.md) 了解如何发布新版本。
+
+快速构建：
+
+```bash
+# 构建所有平台
+./build-npm.sh
+
+# 或使用 npm 脚本
+npm run build:npm
+
+# 单独构建某个平台
+npm run build:linux
+npm run build:darwin-x64
+npm run build:darwin-arm64
+npm run build:windows
+```
+
+发布到 npm：
+
+```bash
+# 发布所有平台包
+npm run publish:all
+
+# 或手动发布
+cd packages/linux-x64 && npm publish
+cd ../darwin-x64 && npm publish
+cd ../darwin-arm64 && npm publish
+cd ../win32-x64 && npm publish
+cd ../.. && npm publish
+```
 
 ## 许可证
 

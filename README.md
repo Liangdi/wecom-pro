@@ -43,33 +43,31 @@
 
 ### 安装
 
-~~```bash
-# 安装 CLI
-npm install -g @wecom/cli
-
-# 安装 CLI SKILL（必需）
-npx skills add WeComTeam/wecom-pro -y -g
-```~~
-
-> **注意**: 本项目为 Rust 实现，暂不提供 Node.js 版本。请从 [GitHub Releases](https://github.com/Liangdi/wecom-pro/releases) 下载预编译二进制文件，或使用 cargo 安装。
+> **注意**: 本项目为 Rust 实现，暂不提供 Node.js 版本。
 
 ```bash
 # 使用 cargo 安装（推荐）
 cargo install wecom-pro
+```
 
-# 或从 GitHub Releases 下载
-# Linux
-wget https://github.com/Liangdi/wecom-pro/releases/download/v0.1.0/wecom-pro-linux-x64 -O wecom-pro
-chmod +x wecom-pro
+~~从 GitHub Releases 下载预编译二进制文件（暂未发布）~~
 
-# macOS
-wget https://github.com/Liangdi/wecom-pro/releases/download/v0.1.0/wecom-pro-macos-x64 -O wecom-pro
-chmod +x wecom-pro
+```bash
+# ~~Linux（暂未发布）~~
+# wget https://github.com/Liangdi/wecom-pro/releases/download/v0.1.0/wecom-pro-linux-x64 -O wecom-pro
+# chmod +x wecom-pro
 
-# 或从源码编译
-git clone https://github.com/Liangdi/wecom-pro.git
-cd wecom-pro
-cargo install --path .
+# ~~macOS（暂未发布）~~
+# wget https://github.com/Liangdi/wecom-pro/releases/download/v0.1.0/wecom-pro-macos-x64 -O wecom-pro
+# chmod +x wecom-pro
+```
+
+~~从源码编译（暂未发布）~~
+
+```bash
+# ~~git clone https://github.com/Liangdi/wecom-pro.git~~
+# ~~cd wecom-pro~~
+# ~~cargo install --path .~~
 ```
 
 ### 快速开始

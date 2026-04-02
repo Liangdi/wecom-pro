@@ -2483,7 +2483,7 @@ dependencies = [
 
 [[package]]
 name = "wecom-pro"
-version = "0.1.3"
+version = "0.1.0"
 dependencies = [
  "aes-gcm",
  "anyhow",

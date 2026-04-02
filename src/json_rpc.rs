@@ -12,14 +12,15 @@ struct JsonRpcRequest {
     params: Option<Value>,
 }
 
-/// Send a JSON-RPC 2.0 request to the MCP endpoint for the given category and method.
-pub async fn send(
+/// Send a JSON-RPC 2.0 request to the MCP endpoint for the given bot_id, category and method.
+pub async fn send_by_id(
+    bot_id: &str,
     category: &str,
     method: &str,
     params: Option<Value>,
     timeout_ms: Option<i32>,
 ) -> Result<Value> {
-    let mcp_url = mcp::get_mcp_url(category).await?;
+    let mcp_url = mcp::get_mcp_url_by_id(bot_id, category).await?;
 
     let body = JsonRpcRequest {
         jsonrpc: "2.0",
@@ -56,4 +57,16 @@ pub async fn send(
     let rpc_res = serde_json::from_str::<Value>(&body_text)?;
 
     Ok(rpc_res)
+}
+
+/// Send a JSON-RPC 2.0 request to the MCP endpoint for the given category and method.
+/// This function maintains backward compatibility by defaulting to "default" bot.
+#[allow(dead_code)]
+pub async fn send(
+    category: &str,
+    method: &str,
+    params: Option<Value>,
+    timeout_ms: Option<i32>,
+) -> Result<Value> {
+    send_by_id("default", category, method, params, timeout_ms).await
 }

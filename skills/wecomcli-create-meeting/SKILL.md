@@ -17,8 +17,23 @@ wecomcli-create-meeting 提供企业微信预约会议的创建能力, 支持设
 ## 命令调用方式
 
 执行指定命令：
+
 ```bash
+# 单 Bot 模式
 wecom-cli meeting <tool_name> '<json_params>'
+
+# 多 Bot 模式 - 使用指定 Bot
+wecom-cli meeting --bot <bot_id> <tool_name> '<json_params>'
+```
+
+**多 Bot 示例**：
+
+```bash
+# 使用 work bot 创建工作会议
+wecom-cli meeting --bot work create_meeting '{"title": "项目周会", "meeting_start_datetime": "2026-04-03 14:00", "meeting_duration": 3600, "invitees": {"userid": ["zhangsan", "lisi"]}}'
+
+# 使用 personal bot 创建个人会议
+wecom-cli meeting --bot personal create_meeting '{"title": "朋友聚会", "meeting_start_datetime": "2026-04-05 19:00", "meeting_duration": 1800, "invitees": {"userid": ["wangwu"]}}'
 ```
 
 ---

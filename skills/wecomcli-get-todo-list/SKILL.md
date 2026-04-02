@@ -25,8 +25,26 @@ metadata:
 
 ## 调用方式
 
+### 单 Bot 模式
+
 ```bash
 wecom-cli todo get_todo_list '<json格式的入参>'
+```
+
+### 多 Bot 模式
+
+```bash
+wecom-cli todo --bot <bot_id> get_todo_list '<json格式的入参>'
+```
+
+**示例**：
+
+```bash
+# 使用 work bot 查询工作待办
+wecom-cli todo --bot work get_todo_list '{}'
+
+# 使用 personal bot 查询个人待办
+wecom-cli todo --bot personal get_todo_list '{"remind_begin_time": "2026-04-01 00:00:00", "remind_end_time": "2026-04-30 23:59:59"}'
 ```
 
 ## 参数说明

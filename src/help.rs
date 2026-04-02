@@ -8,9 +8,15 @@ thread_local! {
 }
 
 /// Fetch and display the available tools for a given category via JSON-RPC.
+#[allow(dead_code)]
 pub async fn show_category_tools(category: &str) -> Result<()> {
+    show_category_tools_with_bot(category, "default").await
+}
+
+/// Fetch and display the available tools for a given category via JSON-RPC with specific bot.
+pub async fn show_category_tools_with_bot(category: &str, bot_id: &str) -> Result<()> {
     // Try to dynamically fetch the tool list via JSON-RPC
-    let res = json_rpc::send(category, "tools/list", None, None).await?;
+    let res = json_rpc::send_by_id(bot_id, category, "tools/list", None, None).await?;
 
     // Parse the returned tool list
     let Some(tools) = res
@@ -59,7 +65,12 @@ pub async fn show_category_tools(category: &str) -> Result<()> {
     Ok(())
 }
 
+#[allow(dead_code)]
 pub async fn show_tool_help(category: &str, tool_name: &str) -> Result<()> {
+    show_tool_help_with_bot(category, tool_name, "default").await
+}
+
+pub async fn show_tool_help_with_bot(category: &str, tool_name: &str, bot_id: &str) -> Result<()> {
     // First try to get tool information from cache
     let tools = TOOLS_CACHE.with(|cache| {
         let cache_ref = cache.borrow();
@@ -70,7 +81,7 @@ pub async fn show_tool_help(category: &str, tool_name: &str) -> Result<()> {
         tools
     } else {
         // If not in cache, fetch dynamically
-        let res = json_rpc::send(category, "tools/list", None, None).await?;
+        let res = json_rpc::send_by_id(bot_id, category, "tools/list", None, None).await?;
 
         let tools = res
             .get("result")

@@ -11,8 +11,22 @@ metadata:
 
 > `wecom-cli` 是企业微信提供的命令行程序，所有操作通过执行 `wecom-cli` 命令完成。
 
-
 通过 `wecom-cli msg <接口名> '<json入参>'` 与企业微信消息系统交互。
+
+### 多 Bot 支持
+
+所有消息接口都支持通过 `--bot` 或 `-b` 参数指定使用的 Bot：
+
+```bash
+# 使用 work bot 发送工作消息
+wecom-cli msg --bot work send_message '{"chat_type": 1, "chatid": "zhangsan", "msgtype": "text", "text": {"content": "工作通知"}}'
+
+# 使用 personal bot 发送个人消息
+wecom-cli msg --bot personal send_message '{"chat_type": 1, "chatid": "lisi", "msgtype": "text", "text": {"content": "周末安排"}}'
+
+# 使用指定 bot 查询会话列表
+wecom-cli msg --bot work get_msg_chat_list '{"begin_time": "2026-03-11 00:00:00", "end_time": "2026-03-17 23:59:59"}'
+```
 
 ---
 

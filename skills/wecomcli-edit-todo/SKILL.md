@@ -25,8 +25,23 @@ metadata:
 
 创建一个新的待办事项，可指定内容、分派人和提醒时间：
 
+#### 单 Bot 模式
 ```bash
 wecom-cli todo create_todo '<json格式的入参>'
+```
+
+#### 多 Bot 模式
+```bash
+wecom-cli todo --bot <bot_id> create_todo '<json格式的入参>'
+```
+
+**示例**：
+```bash
+# 使用 work bot 创建工作待办
+wecom-cli todo --bot work create_todo '{"content": "完成项目报告", "todo_status": 1, "remind_time": "2026-04-03 09:00:00"}'
+
+# 使用 personal bot 创建个人待办
+wecom-cli todo --bot personal create_todo '{"content": "买牛奶", "todo_status": 1}'
 ```
 
 **参数说明：**

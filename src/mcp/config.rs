@@ -35,12 +35,14 @@ pub struct GetMcpConfigRequest {
 }
 
 impl GetMcpConfigRequest {
-    /// Build a signed request from stored bot credentials
-    pub fn build(bind_source: McpBindSource) -> Result<Self> {
-        let bot = auth::get_bot_info().ok_or_else(|| {
+    /// Build a signed request from stored bot credentials for a specific bot_id
+    pub fn build_by_id(bot_id: &str, bind_source: McpBindSource) -> Result<Self> {
+        let bot = auth::get_bot_info_by_id(bot_id).ok_or_else(|| {
             anyhow::anyhow!(
-                "未找到企业微信机器人信息，请先运行 `{} init`",
-                env!("CARGO_BIN_NAME")
+                "未找到 Bot '{}' 的信息，请先运行 `{} init --bot {}`",
+                bot_id,
+                env!("CARGO_BIN_NAME"),
+                bot_id
             )
         })?;
 
@@ -59,6 +61,13 @@ impl GetMcpConfigRequest {
             bind_source,
             cli_version: env!("CARGO_PKG_VERSION").to_string(),
         })
+    }
+
+    /// Build a signed request from stored bot credentials
+    /// This function maintains backward compatibility by defaulting to "default" bot.
+    #[allow(dead_code)]
+    pub fn build(bind_source: McpBindSource) -> Result<Self> {
+        Self::build_by_id("default", bind_source)
     }
 }
 
@@ -113,19 +122,46 @@ fn sha256_hex(input: &str) -> String {
 // Persistence
 // ---------------------------------------------------------------------------
 
-/// Return the file path for the encrypted MCP config cache.
-fn mcp_config_path() -> std::path::PathBuf {
-    crate::constants::config_dir().join("mcp_config.enc")
+/// Return the file path for the encrypted MCP config cache by bot_id.
+/// "default" uses the legacy path for backward compatibility, but falls back to mcp_configs/default.enc
+fn mcp_config_path_by_id(bot_id: &str) -> std::path::PathBuf {
+    let config_dir = crate::constants::config_dir();
+    match bot_id {
+        "default" => {
+            // Try legacy path first for backward compatibility
+            let legacy_path = config_dir.join("mcp_config.enc");
+            if legacy_path.exists() {
+                return legacy_path;
+            }
+            // Fall back to new location
+            config_dir.join("mcp_configs").join("default.enc")
+        }
+        _ => config_dir.join("mcp_configs").join(format!("{bot_id}.enc")),
+    }
 }
 
-/// Read cached MCP config list from the encrypted file.
-pub fn load_mcp_config() -> Option<Vec<McpConfigItem>> {
-    let data = fs::read(mcp_config_path()).ok()?;
+/// Return the file path for the encrypted MCP config cache.
+/// This is the legacy function that defaults to "default" bot.
+#[allow(dead_code)]
+fn mcp_config_path() -> std::path::PathBuf {
+    mcp_config_path_by_id("default")
+}
+
+/// Read cached MCP config list from the encrypted file by bot_id.
+pub fn load_mcp_config_by_id(bot_id: &str) -> Option<Vec<McpConfigItem>> {
+    let data = fs::read(mcp_config_path_by_id(bot_id)).ok()?;
     crypto::try_decrypt_data(&data).ok()
 }
 
-/// Encrypt and persist the MCP config list to disk.
-pub fn save_mcp_config(items: &[McpConfigItem]) -> Result<()> {
+/// Read cached MCP config list from the encrypted file.
+/// This function maintains backward compatibility by defaulting to "default" bot.
+#[allow(dead_code)]
+pub fn load_mcp_config() -> Option<Vec<McpConfigItem>> {
+    load_mcp_config_by_id("default")
+}
+
+/// Encrypt and persist the MCP config list to disk for a specific bot_id.
+pub fn save_mcp_config_by_id(bot_id: &str, items: &[McpConfigItem]) -> Result<()> {
     let key = crypto::load_existing_key().unwrap_or_else(|| {
         let k = crypto::generate_random_key();
         tracing::info!("Generated new encryption key for MCP config");
@@ -135,20 +171,34 @@ pub fn save_mcp_config(items: &[McpConfigItem]) -> Result<()> {
     crypto::save_key(&key)?;
 
     let encrypted = crypto::encrypt_data(items, &key)?;
-    let path = mcp_config_path();
+    let path = mcp_config_path_by_id(bot_id);
     fs_util::atomic_write(&path, &encrypted, Some(0o600))?;
 
     tracing::info!("MCP config saved to {}", path.display());
     Ok(())
 }
 
-/// Remove the cached MCP config file from disk.
-pub fn clear_mcp_config() {
-    let path = mcp_config_path();
+/// Encrypt and persist the MCP config list to disk.
+/// This function maintains backward compatibility by defaulting to "default" bot.
+#[allow(dead_code)]
+pub fn save_mcp_config(items: &[McpConfigItem]) -> Result<()> {
+    save_mcp_config_by_id("default", items)
+}
+
+/// Remove the cached MCP config file from disk for a specific bot_id.
+pub fn clear_mcp_config_by_id(bot_id: &str) {
+    let path = mcp_config_path_by_id(bot_id);
     if path.exists() {
         let _ = fs::remove_file(&path);
         tracing::info!("MCP config cache removed: {}", path.display());
     }
+}
+
+/// Remove the cached MCP config file from disk.
+/// This function maintains backward compatibility by defaulting to "default" bot.
+#[allow(dead_code)]
+pub fn clear_mcp_config() {
+    clear_mcp_config_by_id("default")
 }
 
 #[cfg(test)]
@@ -173,11 +223,12 @@ fn load_mcp_config_from_path(path: &std::path::Path, key: &[u8; 32]) -> Option<V
 // API Call
 // ---------------------------------------------------------------------------
 
-/// Always fetch the MCP config from the server, bypassing local cache, and persist the result.
-pub async fn fetch_mcp_config(
+/// Always fetch the MCP config from the server for a specific bot_id, bypassing local cache, and persist the result.
+pub async fn fetch_mcp_config_by_id(
+    bot_id: &str,
     bind_source: McpBindSource,
 ) -> Result<GetMcpConfigResponse, FetchMcpConfigError> {
-    let request = GetMcpConfigRequest::build(bind_source)?;
+    let request = GetMcpConfigRequest::build_by_id(bot_id, bind_source)?;
 
     let response = reqwest::Client::builder()
         .build()
@@ -219,9 +270,18 @@ pub async fn fetch_mcp_config(
         )));
     };
 
-    save_mcp_config(list)?;
+    save_mcp_config_by_id(bot_id, list)?;
 
     Ok(resp)
+}
+
+/// Always fetch the MCP config from the server, bypassing local cache, and persist the result.
+/// This function maintains backward compatibility by defaulting to "default" bot.
+#[allow(dead_code)]
+pub async fn fetch_mcp_config(
+    bind_source: McpBindSource,
+) -> Result<GetMcpConfigResponse, FetchMcpConfigError> {
+    fetch_mcp_config_by_id("default", bind_source).await
 }
 
 #[cfg(test)]

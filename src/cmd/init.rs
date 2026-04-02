@@ -2,11 +2,21 @@ use crate::auth;
 use crate::mcp;
 use crate::mcp::config::McpBindSource;
 use anyhow::Result;
-use clap::ArgMatches;
+use clap::{ArgMatches, Args, FromArgMatches};
+
+#[derive(Args)]
+pub struct InitArgs {
+    /// 指定初始化的 Bot ID（默认为 default）
+    #[arg(long, short = 'b')]
+    pub bot: Option<String>,
+}
 
 /// Handle the `init` subcommand: prompt for bot credentials, persist them, and verify via MCP config fetch.
-pub async fn handle_init_cmd(_matches: &ArgMatches) -> Result<()> {
-    cliclack::intro("企业微信机器人初始化")?;
+pub async fn handle_init_cmd(matches: &ArgMatches) -> Result<()> {
+    let args = InitArgs::from_arg_matches(matches)?;
+    let bot_id = args.bot.as_deref().unwrap_or("default");
+
+    cliclack::intro(format!("企业微信机器人初始化 - {}", bot_id))?;
 
     // 交互选择接入方式
     let method: &str = cliclack::select("请选择企微机器人接入方式：")
@@ -19,8 +29,8 @@ pub async fn handle_init_cmd(_matches: &ArgMatches) -> Result<()> {
         _ => (init_manual().await?, McpBindSource::Interactive),
     };
 
-    auth::set_bot_info(&bot)?;
-    verify_and_finish(bind_source).await
+    auth::set_bot_info_by_id(bot_id, &bot)?;
+    verify_and_finish(bot_id, bind_source).await
 }
 
 /// 扫码接入流程
@@ -42,11 +52,11 @@ async fn init_manual() -> Result<auth::Bot> {
 }
 
 /// 验证凭证并完成初始化
-async fn verify_and_finish(bind_source: McpBindSource) -> Result<()> {
+async fn verify_and_finish(bot_id: &str, bind_source: McpBindSource) -> Result<()> {
     let spinner = cliclack::spinner();
     spinner.start("正在验证企业微信机器人凭证...");
 
-    if let Err(e) = mcp::config::fetch_mcp_config(bind_source).await {
+    if let Err(e) = mcp::config::fetch_mcp_config_by_id(bot_id, bind_source).await {
         spinner.stop("企业微信机器人凭证验证失败");
 
         let mut output_errmsg: String = "验证企业微信机器人凭证失败".to_owned();
@@ -68,8 +78,8 @@ async fn verify_and_finish(bind_source: McpBindSource) -> Result<()> {
         }
 
         // Credentials invalid or server unreachable — rollback
-        auth::clear_bot_info();
-        mcp::config::clear_mcp_config();
+        auth::clear_bot_info_by_id(bot_id);
+        mcp::config::clear_mcp_config_by_id(bot_id);
         cliclack::outro("初始化失败 ❌")?;
         anyhow::bail!(output_errmsg);
     }

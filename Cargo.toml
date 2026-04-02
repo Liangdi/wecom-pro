@@ -1,10 +1,10 @@
 [package]
-name = "wecom-cli"
+name = "wecom-pro"
 version = "0.1.3"
 edition = "2024"
 
 [[bin]]
-name = "wecom-cli"
+name = "wecom-pro"
 path = "src/main.rs"
 
 [dependencies]

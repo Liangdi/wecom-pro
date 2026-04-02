@@ -19,3 +19,10 @@ release-major:
 
 upgrade:
     cargo +nightly update --breaking -Z unstable-options
+
+
+npm-publish:
+    npm publish --registry https://registry.npmjs.org/
+
+cargo-publish:
+    cargo publish --registry crates-io 

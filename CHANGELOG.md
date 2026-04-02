@@ -1,3 +1,26 @@
+## [0.1.5] - 2026-04-02
+
+### 🚀 Features
+
+- 添加 Linux musl 静态链接构建目标
+- 添加 GitHub Release 自动发布功能
+- 添加 init 命令非交互式模式和 JSON 输出支持
+
+### 🐛 Bug Fixes
+
+- 统一所有 npm publish 命令的 registry 参数
+- 移除 GitHub Actions 中的 pnpm 版本指定以避免冲突
+- 为 Linux musl 目标添加必要的工具链安装
+
+### 🚜 Refactor
+
+- 简化 GitHub Actions 只构建 Rust 二进制文件
+
+### ⚙️ Miscellaneous Tasks
+
+- 升级平台包版本到 0.1.4
+- 添加 GitHub Actions 跨平台构建和发布流程
+- Bump npm package version to 0.1.5
 ## [0.1.4] - 2026-04-02
 
 ### 🚀 Features
@@ -17,6 +40,7 @@
 
 ### ⚙️ Miscellaneous Tasks
 
+- Release version 0.1.4
 - Release version 0.1.4
 ## [0.1.3] - 2026-04-02
 

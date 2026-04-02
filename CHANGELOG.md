@@ -1,8 +1,17 @@
+## [0.1.3] - 2026-04-02
+
+### 🚀 Features
+
+- 添加 npm 包支持和重命名为 @liangdi/wecom-pro
 ## [0.1.2] - 2026-04-02
 
 ### 🚀 Features
 
 - 添加统一的 JSON 错误输出格式并防止重复初始化
+
+### ⚙️ Miscellaneous Tasks
+
+- Release version 0.1.2
 ## [0.1.1] - 2026-04-02
 
 ### 🚀 Features

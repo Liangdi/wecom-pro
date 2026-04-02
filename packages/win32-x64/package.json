@@ -1,6 +1,6 @@
 {
   "name": "@liangdi/wecom-pro-win32-x64",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "The win32-x64 binary for @liangdi/wecom-pro",
   "license": "MIT",
   "files": [

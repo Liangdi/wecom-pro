@@ -1,6 +1,6 @@
 {
   "name": "@liangdi/wecom-pro",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "企业微信命令行工具 — 让人类和 AI Agent 都能在终端中操作企业微信",
   "keywords": [
     "wecom-pro",
@@ -51,10 +51,10 @@
     "typescript-eslint": "^8.57.2"
   },
   "optionalDependencies": {
-    "@liangdi/wecom-pro-darwin-arm64": "0.1.4",
-    "@liangdi/wecom-pro-darwin-x64": "0.1.4",
-    "@liangdi/wecom-pro-linux-x64": "0.1.4",
-    "@liangdi/wecom-pro-win32-x64": "0.1.4"
+    "@liangdi/wecom-pro-darwin-arm64": "0.1.5",
+    "@liangdi/wecom-pro-darwin-x64": "0.1.5",
+    "@liangdi/wecom-pro-linux-x64": "0.1.5",
+    "@liangdi/wecom-pro-win32-x64": "0.1.5"
   },
   "packageManager": "pnpm@10.32.1",
   "engines": {

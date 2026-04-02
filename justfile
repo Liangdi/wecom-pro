@@ -22,7 +22,7 @@ upgrade:
 
 
 npm-publish:
-    npm publish --registry https://registry.npmjs.org/
+    npm publish --access public --registry https://registry.npmjs.org/
 
 cargo-publish:
     cargo publish --registry crates-io 

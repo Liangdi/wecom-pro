@@ -85,8 +85,8 @@ npm-publish-linux-windows:
     #!/bin/bash
     set -e
     echo "📦 Publishing Linux/Windows packages..."
-    cd packages/linux-x64 && npm publish --access public
-    cd ../win32-x64 && npm publish --access public
+    cd packages/linux-x64 && npm publish --access public --registry https://registry.npmjs.org/
+    cd ../win32-x64 && npm publish --access public --registry https://registry.npmjs.org/
     cd ../..
     echo "✅ Linux/Windows packages published!"
 
@@ -95,8 +95,8 @@ npm-publish-apple:
     #!/bin/bash
     set -e
     echo "📦 Publishing Apple platform packages..."
-    cd packages/darwin-x64 && npm publish --access public
-    cd ../darwin-arm64 && npm publish --access public
+    cd packages/darwin-x64 && npm publish --access public --registry https://registry.npmjs.org/
+    cd ../darwin-arm64 && npm publish --access public --registry https://registry.npmjs.org/
     cd ../..
     echo "✅ Apple platform packages published!"
 

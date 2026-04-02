@@ -1,6 +1,6 @@
 [package]
 name = "wecom-pro"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["Liangdi <wu@liangdi.me>"]
 description = "企业微信命令行工具 - 多 Bot 支持版本，从 WecomTeam/wecom-cli fork 而来"

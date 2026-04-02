@@ -18,6 +18,10 @@ pub mod env {
 
     /// MCP config URL
     pub const MCP_CONFIG_ENDPOINT: &str = "WECOM_CLI_MCP_CONFIG_ENDPOINT";
+
+    /// Output format (json or text)
+    #[allow(dead_code)]
+    pub const OUTPUT_FORMAT: &str = "WECOM_CLI_OUTPUT_FORMAT";
 }
 
 /// Return the configuration directory path (env override or `~/.config/wecom`).

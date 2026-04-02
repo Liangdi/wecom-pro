@@ -1,4 +1,5 @@
 use crate::auth;
+use crate::cli_output;
 use crate::mcp;
 use crate::mcp::config::McpBindSource;
 use anyhow::Result;
@@ -15,6 +16,22 @@ pub struct InitArgs {
 pub async fn handle_init_cmd(matches: &ArgMatches) -> Result<()> {
     let args = InitArgs::from_arg_matches(matches)?;
     let bot_id = args.bot.as_deref().unwrap_or("default");
+
+    // 检查 bot_id 是否已被初始化
+    if auth::get_bot_info_by_id(bot_id).is_some() {
+        let error_msg = format!(
+            "Bot ID \"{}\" 已存在，如需重新初始化请先使用 `{} bot remove {}` 清除",
+            bot_id,
+            env!("CARGO_BIN_NAME"),
+            bot_id
+        );
+        if cli_output::is_json_output() {
+            anyhow::bail!("Bot ID \"{}\" 已存在", bot_id);
+        } else {
+            cliclack::outro(&error_msg)?;
+            anyhow::bail!("Bot ID \"{}\" 已存在", bot_id);
+        }
+    }
 
     cliclack::intro(format!("企业微信机器人初始化 - {}", bot_id))?;
 

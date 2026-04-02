@@ -1,4 +1,5 @@
 mod auth;
+mod cli_output;
 mod cmd;
 mod config;
 mod constants;
@@ -48,10 +49,18 @@ async fn main() -> Result<()> {
 
     let matches = cmd.get_matches();
 
-    match matches.subcommand() {
+    let result: anyhow::Result<()> = match matches.subcommand() {
         Some(("init", matches)) => cmd::init::handle_init_cmd(matches).await,
         Some(("bot", matches)) => cmd::bot::handle_bot_cmd(matches).await,
         Some((category, matches)) => cmd::call::handle_call_cmd(category, matches).await,
         _ => anyhow::bail!("未知命令"),
+    };
+
+    match result {
+        Err(e) => {
+            cli_output::print_error(&e);
+            std::process::exit(1);
+        }
+        Ok(_) => Ok(()),
     }
 }

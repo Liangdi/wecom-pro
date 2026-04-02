@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build Rust Binaries
 
 on:
   push:
@@ -49,15 +49,6 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'pnpm'
-
       - name: Cache Rust dependencies
         uses: actions/cache@v4
         with:
@@ -70,147 +61,12 @@ jobs:
             ${{ runner.os }}-cargo-${{ matrix.target }}-
             ${{ runner.os }}-cargo-
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Build for ${{ matrix.platform }}
-        run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            cargo build --release --target ${{ matrix.target }}
-            mkdir -p packages/${{ matrix.platform }}/bin
-            cp target/${{ matrix.target }}/release/wecom-pro.exe packages/${{ matrix.platform }}/bin/
-          else
-            cargo build --release --target ${{ matrix.target }}
-            mkdir -p packages/${{ matrix.platform }}/bin
-            cp target/${{ matrix.target }}/release/wecom-pro packages/${{ matrix.platform }}/bin/
-          fi
-        shell: bash
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Upload binary artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_name }}
-          path: packages/${{ matrix.platform }}/bin/${{ matrix.binary_name }}
+          path: target/${{ matrix.target }}/release/${{ matrix.binary_name }}
           if-no-files-found: error
-
-      - name: Upload package artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact_name }}-package
-          path: packages/${{ matrix.platform }}/
-          if-no-files-found: error
-
-  publish:
-    name: Publish to npm
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts/
-
-      - name: Prepare packages
-        run: |
-          # Copy binaries to their respective packages
-          for platform in linux-x64 darwin-x64 darwin-arm64 win32-x64; do
-            artifact_name="wecom-pro-$platform"
-            if [ "$platform" = "win32-x64" ]; then
-              binary_name="wecom-pro.exe"
-            else
-              binary_name="wecom-pro"
-            fi
-            cp artifacts/$artifact_name/$binary_name packages/$platform/bin/
-            cp -r artifacts/$artifact_name-package/* packages/$platform/
-          done
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build npm packages
-        run: pnpm run build:npm
-
-      - name: Publish platform-specific packages
-        run: |
-          for platform in linux-x64 darwin-x64 darwin-arm64 win32-x64; do
-            echo "Publishing $platform..."
-            cd packages/$platform
-            pnpm publish --no-git-checks --access public
-            cd ../..
-          done
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish main package
-        run: |
-          echo "Publishing main package..."
-          pnpm publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  release:
-    name: Create GitHub Release
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts/
-
-      - name: Create release archives
-        run: |
-          mkdir -p release
-          for platform in linux-x64 darwin-x64 darwin-arm64 win32-x64; do
-            artifact_name="wecom-pro-$platform"
-            if [ "$platform" = "win32-x64" ]; then
-              binary_name="wecom-pro.exe"
-              archive_name="wecom-pro-windows-x64.zip"
-            else
-              binary_name="wecom-pro"
-              archive_name="wecom-pro-$platform.tar.gz"
-            fi
-
-            if [ "$platform" = "win32-x64" ]; then
-              cd artifacts/$artifact_name
-              zip -r ../../../release/$archive_name $binary_name
-              cd ../../..
-            else
-              tar -czf release/$archive_name -C artifacts/$artifact_name $binary_name
-            fi
-          done
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release/*
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

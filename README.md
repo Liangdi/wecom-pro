@@ -3,10 +3,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Rust](https://img.shields.io/badge/rust-%3E%3D1.75-orange.svg)](https://www.rust-lang.org/)
 
-> 💬 扫码加入企业微信交流群：
->
-> <img src="https://wwcdn.weixin.qq.com/node/wework/images/202603241759.3fb01c32cc.png" alt="扫码入群交流" width="200" />
-
 企业微信命令行工具 — 让人类和 AI Agent 都能在终端中操作企业微信。覆盖通讯录、待办、会议、消息、日程、文档、智能表格等核心业务域，提供 7 大品类及 12 个 AI Agent [Skills](https://github.com/WecomTeam/wecom-pro/tree/main/skills)。
 
 > **项目说明**: 本项目是从 [WecomTeam/wecom-pro](https://github.com/WecomTeam/wecom-pro) fork 而来，增加了**多 Bot 支持**功能。

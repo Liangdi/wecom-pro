@@ -2,7 +2,6 @@ pub(crate) mod config;
 pub(crate) mod error;
 
 use anyhow::Result;
-use rand::Rng;
 
 /// Look up the MCP URL for the given `category` (matched against `biz_type`) for a specific bot_id.
 pub async fn get_mcp_url_by_id(bot_id: &str, category: &str) -> Result<String> {
@@ -46,7 +45,7 @@ pub fn gen_req_id(prefix: &str) -> String {
 /// Generate a random hex string of the specified character length.
 fn generate_random_hex(length: usize) -> String {
     let byte_len = length.div_ceil(2);
-    let bytes: Vec<u8> = (0..byte_len).map(|_| rand::rng().random::<u8>()).collect();
+    let bytes: Vec<u8> = (0..byte_len).map(|_| rand::random()).collect();
     let hex = hex::encode(bytes);
     hex[..length].to_string()
 }

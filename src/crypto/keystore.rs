@@ -3,7 +3,6 @@ use std::path::PathBuf;
 
 use anyhow::Result;
 use base64::prelude::*;
-use rand::Rng;
 
 use crate::fs_util;
 
@@ -45,7 +44,7 @@ fn decode_key(s: &str) -> Result<[u8; 32]> {
 
 /// Generate a fresh random 256-bit key.
 pub fn generate_random_key() -> [u8; 32] {
-    rand::rng().random()
+    rand::random()
 }
 
 /// Load the key from keyring. Returns `None` if unavailable.

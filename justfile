@@ -29,7 +29,7 @@ npm-build-linux-windows:
 
     TARGETS=(
         "x86_64-unknown-linux-gnu:linux-x64"
-        "x86_64-pc-windows-msvc:win32-x64"
+        "x86_64-pc-windows-gnu:win32-x64"
     )
 
     for target_pair in "${TARGETS[@]}"; do

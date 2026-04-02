@@ -119,10 +119,8 @@ jobs:
           # macOS ARM64
           tar -czf release/wecom-pro-darwin-arm64.tar.gz -C artifacts/wecom-pro-darwin-arm64 wecom-pro
 
-          # Windows
-          cd artifacts/wecom-pro-win32-x64
-          zip -r ../../../release/wecom-pro-windows-x64.zip wecom-pro.exe
-          cd ../../..
+          # Windows - use absolute path to avoid issues with cd
+          (cd artifacts/wecom-pro-win32-x64 && zip -r ../../release/wecom-pro-windows-x64.zip wecom-pro.exe)/..
 
           # Create checksums
           cd release

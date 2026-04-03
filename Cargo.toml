@@ -48,3 +48,10 @@ lto = true          # 链接时优化
 codegen-units = 1   # 更好的优化
 strip = true        # 移除符号
 panic = "abort"     # 减小二进制大小
+
+[package.metadata.release]
+pre-release-hook = ["scripts/sync-version.sh", "{{version}}"]
+tag-name = "{{version}}"
+pre-release-replacements = [
+  {file="README.md", search="wecom-pro v[0-9]+\\.[0-9]+\\.[0-9]+", replace="wecom-pro v{{version}}"},
+]

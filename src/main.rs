@@ -36,7 +36,8 @@ async fn main() -> Result<()> {
         ))
         .subcommand(cmd::bot::BotCommand::augment_subcommands(
             Command::new("bot").about("管理多个 Bot 配置"),
-        ));
+        ))
+        .subcommand(Command::new("help-all").about("显示所有命令的完整帮助信息"));
 
     for category in categories.iter() {
         cmd = cmd.subcommand(cmd::call::CallArgs::augment_args(
@@ -52,6 +53,10 @@ async fn main() -> Result<()> {
     let result: anyhow::Result<()> = match matches.subcommand() {
         Some(("init", matches)) => cmd::init::handle_init_cmd(matches).await,
         Some(("bot", matches)) => cmd::bot::handle_bot_cmd(matches).await,
+        Some(("help-all", _)) => {
+            cmd::help_all::print_help_all();
+            Ok(())
+        }
         Some((category, matches)) => cmd::call::handle_call_cmd(category, matches).await,
         _ => anyhow::bail!("未知命令"),
     };

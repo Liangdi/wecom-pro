@@ -101,13 +101,16 @@ yarn global add @liangdi/wecom-pro
 # 1. 安装 wecom-pro
 cargo install wecom-pro
 
-# 2. 配置企业微信机器人凭证（交互式，仅需一次）
+# 2. 查看所有命令帮助（可选）
+wecom-pro help-all
+
+# 3. 配置企业微信机器人凭证（交互式，仅需一次）
 wecom-pro init
 
 # 或使用非交互式模式（适用于 AI Agent）
 wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
 
-# 3. 调用工具
+# 4. 调用工具
 wecom-pro contact get_userlist '{}'
 ```
 
@@ -117,13 +120,16 @@ wecom-pro contact get_userlist '{}'
 # 1. 安装（或使用 npx 无需安装）
 npm install -g @liangdi/wecom-pro
 
-# 2. 配置企业微信机器人凭证（交互式，仅需一次）
+# 2. 查看所有命令帮助（可选）
+wecom-pro help-all
+
+# 3. 配置企业微信机器人凭证（交互式，仅需一次）
 wecom-pro init
 
 # 或使用非交互式模式（适用于 AI Agent）
 wecom-pro init --method manual --bot-id YOUR_BOT_ID --secret YOUR_SECRET
 
-# 3. 调用工具
+# 4. 调用工具
 wecom-pro contact get_userlist '{}'
 ```
 
@@ -177,6 +183,7 @@ Usage: wecom-pro <COMMAND>
 Commands:
   init      初始化企业微信机器人配置
   bot       管理多个 Bot 配置
+  help-all  显示所有命令的完整帮助信息
   contact   通讯录 — 成员查询和搜索
   doc       文档 — 文档/智能表格创建和管理
   meeting   会议 — 创建/管理/查询视频会议
@@ -187,6 +194,93 @@ Commands:
 Options:
   -h, --help     Print help
   -V, --version  Print version
+```
+
+### `help-all`
+
+显示所有命令的完整帮助信息，包括 init、bot 和所有业务分类的详细用法。
+
+```bash
+wecom-pro help-all
+```
+
+输出示例：
+
+```
+╔════════════════════════════════════════════════════════════════╗
+║                    WECOM-PRO 完整命令帮助                           ║
+╚════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  init - 初始化企业微信机器人配置
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+使用方式:
+    wecom-pro init [选项]
+
+选项:
+  -b, --bot <id>           指定初始化的 Bot ID（默认为 default）
+  --method <method>        初始化方式：qrcode 或 manual（非交互模式）
+  --bot-id <id>            手动模式：企业微信机器人 Bot ID
+  --secret <secret>        手动模式：企业微信机器人 Secret
+  -o, --output <format>    输出格式：json 或 text（默认 text）
+
+示例:
+    wecom-pro init
+    wecom-pro init --bot mybot
+    wecom-pro init --method manual --bot-id xxx --secret yyy
+    wecom-pro init --method qrcode --output json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  bot - 管理多个 Bot 配置
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+子命令:
+    list                      列出所有已配置的 Bot
+    show <id>                 显示指定 Bot 的详细信息
+    remove <id>               删除指定 Bot
+
+示例:
+    wecom-pro bot list
+    wecom-pro bot show mybot
+    wecom-pro bot remove mybot
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  业务命令分类
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+contact - 通讯录 — 成员查询和搜索
+    wecom-pro contact <method> [json_args] [选项]
+    wecom-pro contact --help
+
+doc - 文档 — 文档/智能表格创建和管理
+    wecom-pro doc <method> [json_args] [选项]
+    wecom-pro doc --help
+
+meeting - 会议 — 创建/管理/查询视频会议
+    wecom-pro meeting <method> [json_args] [选项]
+    wecom-pro meeting --help
+
+msg - 消息 — 聊天列表、发送/接收消息、媒体下载
+    wecom-pro msg <method> [json_args] [选项]
+    wecom-pro msg --help
+
+schedule - 日程 — 日程增删改查和可用性查询
+    wecom-pro schedule <method> [json_args] [选项]
+    wecom-pro schedule --help
+
+todo - 待办事项 — 创建/查询/编辑待办项
+    wecom-pro todo <method> [json_args] [选项]
+    wecom-pro todo --help
+
+通用选项:
+  -b, --bot <BOT>     指定使用的 Bot（默认使用 default）
+  -h, --help          显示该分类下所有工具的详细信息
+
+示例:
+    wecom-pro msg list_chat
+    wecom-pro msg send_text '{"to_chat_id": "xxx", "content": "hello"}'
+    wecom-pro schedule list --bot mybot
 ```
 
 ### `init`

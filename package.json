@@ -1,6 +1,6 @@
 {
   "name": "@liangdi/wecom-pro",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "企业微信命令行工具 — 让人类和 AI Agent 都能在终端中操作企业微信",
   "keywords": [
     "wecom-pro",

@@ -55,13 +55,15 @@ impl GetMcpConfigRequest {
         let nonce = super::gen_req_id("mcp");
         let signature = sign(&bot.secret, &bot.id, time, &nonce);
 
+        let cli_version = constants::get_user_agent();
+
         Ok(Self {
             bot_id: bot.id,
             time,
             nonce,
             signature,
             bind_source,
-            cli_version: env!("CARGO_PKG_VERSION").to_string(),
+            cli_version,
         })
     }
 

@@ -51,8 +51,9 @@ pub fn mcp_config_endpoint() -> String {
 
 pub fn get_user_agent() -> String {
     format!(
-        "WeComCLI/{} {}/{}",
+        "WeComCLI/{} distribution/{} {}/{}",
         env!("CARGO_PKG_VERSION"),
+        option_env!("WECOM_CLI_DISTRIBUTION").unwrap_or_else(|| "unknown"),
         std::env::consts::OS,
         std::env::consts::ARCH,
     )
